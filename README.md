@@ -119,4 +119,4 @@ sistema-inventario/
 
     Captures de pantalla:
     Dashboard Principal:
-    ![Captura del Sistema](screenshots/captura-sistema.png)
+    ![Captura del Sistema](screenshots/capture-sistema.png)
