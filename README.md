@@ -59,7 +59,9 @@ npm run build
 chmod -R 775 storage/
 chmod -R 775 bootstrap/cache/
 
-Estructura del Proyecto
+## 🏗️ Estructura del Proyecto
+
+```
 sistema-inventario/
 ├── app/
 │   ├── Console/Commands/
@@ -93,6 +95,7 @@ sistema-inventario/
     ├── proveedores/
     ├── ventas/
     └── reportes/
+```
 
     Características Únicas Implementadas
     Control de Stock:
