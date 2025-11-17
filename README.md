@@ -119,4 +119,4 @@ sistema-inventario/
 
     Captures de pantalla:
     Dashboard Principal:
-    ![image alt](https://github.com/NGHTBY/sistema-inventario/blob/main/Captura%20de%20pantalla%202025-11-16%20221623.png?raw=true)
+    ![Captura del Sistema](https://github.com/NGHTBY/sistema-inventario/raw/main/Captura%20de%20pantalla%202025-11-16%20221623.png)
