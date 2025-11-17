@@ -1,4 +1,5 @@
 Descripción del Sistema 
+
 El Sistema de Inventario para Tienda es una aplicación web desarrollada con Laravel 10 que permite gestionar de manera eficiente el inventario de una tienda. El sistema incluye módulos completos para el control de productos, proveedores, ventas y reportes, con características avanzadas como control de stock, códigos de barras y seguimiento de precios.
 
 Características Principales
