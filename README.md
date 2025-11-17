@@ -117,6 +117,7 @@ sistema-inventario/
     Miguel Madariaga: Desarrollador Full-Stack, Laravel, Blade, JavaScript
     Dani Carvajal: Desarrollador Frontend, Tailwind CSS, UX/UI
 
-    Captures de pantalla:
-    Dashboard Principal:
-    ![Captura del Sistema](screenshots/capture-sistema.png)
+    ## 📸 Capturas de Pantalla
+
+### Dashboard Principal
+![Captura del Sistema](screenshots/capture-sistema.png)
