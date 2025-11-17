@@ -121,5 +121,4 @@ sistema-inventario/
 
 ### Dashboard Principal
 ![Captura del Sistema](screenshots/capture-sistema.png)
-### Modulo proveedores
-![Captura del Sistema](screenshots/proveedores.png)
+
