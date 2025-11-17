@@ -120,4 +120,17 @@ sistema-inventario/
 ## 📸 Capturas de Pantalla
 
 ### Dashboard Principal
-![Captura del Sistema](screenshots/capture-sistema.png)
+![Dashboard](screenshots/dashboard.png)
+
+### Gestión de Proveedores
+![Lista de Proveedores](screenshots/proveedores.png)
+![Formulario de Proveedor](screenshots/formulario-proveedor.png)
+
+### Sistema de Ventas
+![Lista de Ventas](screenshots/ventas.png)
+![Nueva Venta](screenshots/nueva-venta.png)
+![Detalle de Venta](screenshots/detalle-venta.png)
+
+### Reportes y PDF
+![Módulo de Reportes](screenshots/reportes.png)
+![Reporte PDF](screenshots/reporte-pdf.png)
