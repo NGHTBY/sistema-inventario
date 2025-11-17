@@ -112,7 +112,7 @@ sistema-inventario/
       - Estadísticas de ventas por período
       - Reportes de inventario en PDF
 
-    Integrantes del Grupo
+    Integrantes del Grupo 
     Cristhian Robles: Desarrollador Backend, Laravel, MySQL
     Miguel Madariaga: Desarrollador Full-Stack, Laravel, Blade, JavaScript
     Dani Carvajal: Desarrollador Frontend, Tailwind CSS, UX/UI
