@@ -46,12 +46,11 @@ class VentaController extends Controller
                 'productos.*.precio' => 'required|numeric|min:0'
             ]);
 
-            // Crear venta con nombres CORRECTOS de la BD
+            // Crear venta
             $venta = Venta::create([
                 'factura' => 'FAC-' . str_pad(Venta::count() + 1, 6, '0', STR_PAD_LEFT),
                 'total' => 0,
                 'fecha' => now()
-                // No incluir 'cliente' ni 'user_id' si no existen en la tabla
             ]);
 
             Log::info("Venta creada ID: {$venta->id}");
@@ -73,20 +72,22 @@ class VentaController extends Controller
                     throw new \Exception("Stock insuficiente para: {$producto->nombre}. Stock disponible: {$producto->stock}");
                 }
 
-                // Actualizar stock
-                $producto->decrement('stock', $item['cantidad']);
-
-                // CORREGIDO: Cambiar 'precio_unitario' por 'precio'
+                // Calcular subtotal
                 $subtotal = $item['cantidad'] * $item['precio'];
+                
+                // Crear item de venta - CORREGIDO: Usar 'precio' consistentemente
                 $ventaItem = VentaItem::create([
                     'venta_id' => $venta->id,
                     'producto_id' => $item['id'],
                     'cantidad' => $item['cantidad'],
-                    'precio' => $item['precio'], // ← CORREGIDO: Cambiado de 'precio_unitario' a 'precio'
+                    'precio' => $item['precio'], // ← CORREGIDO: Se mantiene 'precio'
                     'subtotal' => $subtotal
                 ]);
 
-                Log::info("VentaItem creado ID: {$ventaItem->id}");
+                Log::info("VentaItem creado ID: {$ventaItem->id} - Precio: {$item['precio']} - Subtotal: {$subtotal}");
+
+                // Actualizar stock
+                $producto->decrement('stock', $item['cantidad']);
 
                 $total += $subtotal;
             }
@@ -111,7 +112,6 @@ class VentaController extends Controller
 
     public function show($id)
     {
-        // CORREGIDO: Usar 'detalles' en lugar de 'items'
         $venta = Venta::with('detalles.producto')->findOrFail($id);
         return view('ventas.show', compact('venta'));
     }
@@ -161,7 +161,6 @@ class VentaController extends Controller
     public function generarPDF($id)
     {
         try {
-            // CORREGIDO: Usar 'detalles' en lugar de 'items'
             $venta = Venta::with(['detalles.producto'])->findOrFail($id);
             
             Log::info("Generando PDF para venta ID: {$id}");
@@ -182,29 +181,50 @@ class VentaController extends Controller
         $productosMasVendidos = VentaItem::selectRaw('
                 producto_id, 
                 SUM(cantidad) as total_vendido, 
-                SUM(subtotal) as total_ingresos
+                SUM(subtotal) as total_generado,
+                AVG(precio) as precio_promedio
             ')
             ->with('producto')
             ->groupBy('producto_id')
             ->orderByDesc('total_vendido')
             ->get();
+
+        // DEBUG: Verificar datos
+        Log::info('Productos más vendidos:', [
+            'count' => $productosMasVendidos->count(),
+            'data' => $productosMasVendidos->map(function($item) {
+                return [
+                    'producto' => $item->producto->nombre ?? 'N/A',
+                    'total_vendido' => $item->total_vendido,
+                    'total_generado' => $item->total_generado,
+                    'precio_promedio' => $item->precio_promedio
+                ];
+            })->toArray()
+        ]);
 
         return view('ventas.mas_vendidos', compact('productosMasVendidos'));
     }
 
     public function productosMasVendidosPDF()
     {
-        $productosMasVendidos = VentaItem::selectRaw('
+        $productos = VentaItem::selectRaw('
                 producto_id, 
                 SUM(cantidad) as total_vendido, 
-                SUM(subtotal) as total_ingresos
+                SUM(subtotal) as total_generado,
+                AVG(precio) as precio_promedio
             ')
             ->with('producto')
             ->groupBy('producto_id')
             ->orderByDesc('total_vendido')
             ->get();
 
-        $pdf = Pdf::loadView('ventas.mas_vendidos_pdf', compact('productosMasVendidos'));
+        // DEBUG: Verificar datos antes de generar PDF
+        Log::info('Datos para PDF - Productos más vendidos:', [
+            'count' => $productos->count(),
+            'total_generado_sum' => $productos->sum('total_generado')
+        ]);
+
+        $pdf = Pdf::loadView('ventas.mas_vendidos_pdf', compact('productos'));
         return $pdf->download('productos_mas_vendidos.pdf');
     }
 }

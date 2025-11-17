@@ -9,7 +9,7 @@ class VentaItem extends Model
 {
     use HasFactory;
 
-    // CORREGIDO: Usar nombres reales de la BD
+    // CORREGIDO: Usar 'precio' para coincidir con la migración
     protected $fillable = [
         'venta_id',
         'producto_id',
@@ -28,7 +28,7 @@ class VentaItem extends Model
         return $this->belongsTo(Producto::class);
     }
 
-    // Accesor para compatibilidad
+    // Accesor para compatibilidad (opcional)
     public function getPrecioUnitarioAttribute()
     {
         return $this->precio;

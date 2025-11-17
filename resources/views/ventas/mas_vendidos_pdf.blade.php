@@ -12,7 +12,8 @@
 
         h2 {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            color: #1f2937;
         }
 
         table {
@@ -21,14 +22,32 @@
             margin-top: 15px;
         }
 
-        table th, table td {
-            border: 1px solid #444;
-            padding: 6px;
-            text-align: center;
+        table th {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 8px;
+            text-align: left;
+            font-weight: bold;
         }
 
-        table th {
-            background: #eee;
+        table td {
+            border: 1px solid #d1d5db;
+            padding: 8px;
+        }
+
+        .producto-nombre {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .producto-codigo {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .total-generado {
+            font-weight: bold;
+            color: #059669;
         }
 
         .footer {
@@ -36,6 +55,13 @@
             margin-top: 30px;
             font-size: 12px;
             color: #777;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-style: italic;
         }
     </style>
 </head>
@@ -55,14 +81,21 @@
         </thead>
 
         <tbody>
-            @foreach($productos as $index => $p)
+            @forelse($productos as $index => $p)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $p->nombre }}</td>
-                <td>{{ $p->total_vendido }}</td>
-                <td>${{ number_format($p->total_generado, 0, ',', '.') }}</td>
+                <td>
+                    <div class="producto-nombre">{{ $p->producto->nombre ?? 'Producto no encontrado' }}</div>
+                    <div class="producto-codigo">Código: {{ $p->producto->codigo_barras ?? 'N/A' }}</div>
+                </td>
+                <td>{{ $p->total_vendido }} unidades</td>
+                <td class="total-generado">${{ number_format($p->total_generado, 0, ',', '.') }}</td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="4" class="no-data">No hay ventas registradas</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 

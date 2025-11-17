@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Models\Venta;
-use App\Models\VentaDetalle;
+use App\Models\VentaItem; // Cambiado de VentaDetalle a VentaItem
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -14,11 +14,10 @@ class ReporteController extends Controller
 {
     public function productosMasVendidos()
     {
-        $productosMasVendidos = VentaDetalle::selectRaw('
+        $productosMasVendidos = VentaItem::selectRaw('
                 producto_id, 
                 SUM(cantidad) as total_vendido, 
-                SUM(subtotal) as total_ingresos,
-                AVG(precio_unitario) as precio_promedio
+                SUM(subtotal) as total_generado
             ')
             ->with('producto')
             ->groupBy('producto_id')
@@ -30,18 +29,17 @@ class ReporteController extends Controller
 
     public function productosMasVendidosPDF()
     {
-        $productosMasVendidos = VentaDetalle::selectRaw('
+        $productos = VentaItem::selectRaw('
                 producto_id, 
                 SUM(cantidad) as total_vendido, 
-                SUM(subtotal) as total_ingresos,
-                AVG(precio_unitario) as precio_promedio
+                SUM(subtotal) as total_generado
             ')
             ->with('producto')
             ->groupBy('producto_id')
             ->orderByDesc('total_vendido')
             ->get();
 
-        $pdf = Pdf::loadView('reportes.productos_mas_vendidos_pdf', compact('productosMasVendidos'));
+        $pdf = Pdf::loadView('reportes.productos_mas_vendidos_pdf', compact('productos'));
         return $pdf->download('productos_mas_vendidos.pdf');
     }
 
@@ -72,7 +70,7 @@ class ReporteController extends Controller
         $fechaFin = $request->fecha_fin ?? now()->format('Y-m-d');
 
         $ventas = Venta::with('detalles.producto')
-            ->whereBetween('fecha_venta', [$fechaInicio, $fechaFin])
+            ->whereBetween('fecha', [$fechaInicio, $fechaFin]) // Cambiado de 'fecha_venta' a 'fecha'
             ->get();
 
         $totalVentas = $ventas->count();
@@ -95,7 +93,7 @@ class ReporteController extends Controller
         $fechaFin = $request->fecha_fin ?? now()->format('Y-m-d');
 
         $ventas = Venta::with('detalles.producto')
-            ->whereBetween('fecha_venta', [$fechaInicio, $fechaFin])
+            ->whereBetween('fecha', [$fechaInicio, $fechaFin]) // Cambiado de 'fecha_venta' a 'fecha'
             ->get();
 
         $totalVentas = $ventas->count();

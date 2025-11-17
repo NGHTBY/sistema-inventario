@@ -35,8 +35,8 @@
                     <td class="px-4 py-2 border">
                         @if($item->producto)
                             {{ $item->producto->nombre }}
-                            @if($item->producto->codigo)
-                                <br><small class="text-gray-500">Código: {{ $item->producto->codigo }}</small>
+                            @if($item->producto->codigo_barras)
+                                <br><small class="text-gray-500">Código: {{ $item->producto->codigo_barras }}</small>
                             @endif
                         @else
                             <span class="text-red-500">Producto eliminado</span>
@@ -48,7 +48,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-2 border text-center font-bold text-green-600">
-                        ${{ number_format($item->total_ingresos, 0) }}
+                        ${{ number_format($item->total_generado, 0) }} {{-- ← CORREGIDO --}}
                     </td>
                 </tr>
                 @endforeach
