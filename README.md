@@ -118,5 +118,5 @@ sistema-inventario/
     Dani Carvajal: Desarrollador Frontend, Tailwind CSS, UX/UI
 
     Captures de pantalla:
-    Dashboard Principal:
+    Dashboard Principal :
     ![Captura del Sistema](screenshots/capture-sistema.png)
