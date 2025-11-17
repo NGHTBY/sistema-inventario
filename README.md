@@ -123,7 +123,7 @@ sistema-inventario/
 ## 📸 Capturas de Pantalla
 
 ### Dashboard Principal
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/capture-sistema.png)
 
 ### Gestión de Proveedores
 ![Lista de Proveedores](screenshots/proveedores.png)
