@@ -59,7 +59,7 @@ npm run build
 chmod -R 775 storage/
 chmod -R 775 bootstrap/cache/
 
-## 🏗️ Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 sistema-inventario/
@@ -120,7 +120,7 @@ sistema-inventario/
     Miguel Madariaga: Desarrollador Full-Stack, Laravel, Blade, JavaScript
     Dani Carvajal: Desarrollador Frontend, Tailwind CSS, UX/UI
 
-## 📸 Capturas de Pantalla
+##  Capturas de Pantalla
 
 ### Dashboard Principal
 ![Dashboard](screenshots/capture-sistema.png)
